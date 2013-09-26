@@ -1,0 +1,74 @@
+digraph obsluga_zgloszenia {
+ 
+// Wspólne cechy wszystkiego
+ 
+size = "15.6,15.6";
+   concentrate = true;
+   node [shape=ellipse, fontsize=12, height=0.9, width=0.6, fixedsize=false];
+   edge [style=solid];
+ 
+// Stany
+
+messsstelleListenCto [label="MessstelleListenCto"];
+ 
+messsstelleCto [label="MessstelleCto (+ abwasseranlage Bezeichnung)"];
+messsstelleDto [label="MessstelleDto"];
+MessstelleAnhangListeCto [label="MessstelleAnhangListeCto"];
+MindestanforderungListeCto [label="MindestanforderungListeCto"];
+ListMessstelleHistorieDto [label="ListMessstelleHistorieDto"];
+
+MessstelleAnhangCto [label="MessstelleAnhangCto"];
+
+MessstelleAnhangDto [label="MessstelleAnhangDto"];
+AnhangErweitertDto [label="AnhangErweitertDto"];
+
+Anhangbemerkung [label="Bemerkung, editierbar"];
+
+AnforderungGueltigkeitCto [label="AnforderungGueltigkeitCto"];
+AnforderungGueltigkeitListeCto [label="AnforderungGueltigkeitListeCto"];
+AnforderungGueltigkeitDto [label="AnforderungGueltigkeitDto"];
+
+
+
+
+MindestanforderungListeCto [label="MindestanforderungListeCto"];
+MindestanforderungCto [label="MindestanforderungCto"];
+MindestanforderungDto [label="MindestanforderungDto"];
+
+AnforderungErweitertDto [label="AnforderungErweitertDto"];
+
+
+IN_KLARUNG [label="Noch zu klären; neuer Datenmodell"];
+
+MessstelleAttribute [label=" Attribute der Messstelle; auf Dialog noch verfeinert"];
+// Krawedzie
+ 
+edge [ label="1" ];
+ 
+messsstelleCto -> messsstelleDto;
+messsstelleCto -> MessstelleAnhangListeCto;
+messsstelleCto -> AnforderungGueltigkeitListeCto;
+
+MessstelleAnhangCto -> MessstelleAnhangDto;
+MessstelleAnhangCto -> AnhangErweitertDto;
+
+AnforderungGueltigkeitCto -> AnforderungGueltigkeitDto;
+AnforderungGueltigkeitCto -> MindestanforderungListeCto;
+
+MessstelleAnhangDto -> Anhangbemerkung;
+
+
+messsstelleDto -> MessstelleAttribute;
+
+
+MindestanforderungCto -> MindestanforderungDto;
+MindestanforderungCto -> AnforderungErweitertDto;
+ 
+edge [ label="*" ];
+ 
+messsstelleListenCto -> messsstelleCto;
+MessstelleAnhangListeCto -> MessstelleAnhangCto;
+MindestanforderungListeCto -> MindestanforderungCto;
+AnforderungGueltigkeitListeCto -> AnforderungGueltigkeitCto;
+
+}

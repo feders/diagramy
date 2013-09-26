@@ -1,0 +1,68 @@
+digraph Messstellen {
+ 
+// Wspólne cechy wszystkiego
+ 
+size = "15.6,15.6";
+   concentrate = true;
+   node [shape=ellipse, fontsize=12, height=0.9, width=0.6, fixedsize=false];
+   edge [style=solid];
+ 
+// Stany
+ 
+start [ label="Dialog geöffnet: Suchkriterien leer, Trefferliste leer; neu aktiv, löschen inaktiv, details unsichtbar" ];
+bearbeitung     [ label="Suchkriterien inaktiv, Trefferliste inaktiv; neu inaktiv, löschen inaktiv, details sichtbar in Bearbeitungsmodus " ];
+trefferlisteOhneDetails     [ label="Suchkriterien aktiv, Trefferliste aktiv; neu aktiv, löschen inaktiv, details unsichtbar " ]; 
+trefferlisteMitDetails     [ label="Suchkriterien aktiv, Trefferliste aktiv; neu aktiv, löschen aktiv, details sichtbar in view mode" ]; 
+AenderungenSpeichernPopup [label="Popup mit der Frage: wollen sie die Änderungen speichern?"];
+ValidierungsfehlerPopup     [ label="Popup mit Validierungsfehler angezeigt; Änderungen nicht gespeichert" ]; 
+LoeschenPopup     [ label="Popup mit Frage angezeigt; wirklich löschen?" ]; 
+
+// Krawedzie
+ 
+edge [ label="Neu gedruckt" ];
+ 
+start -> bearbeitung;
+ 
+edge [ label="Bearbetung verlassen" ];
+ 
+bearbeitung -> AenderungenSpeichernPopup;
+
+edge [label = "bearbeiten"];
+
+trefferlisteMitDetails -> bearbeitung;
+
+edge [ label="löschen" ];
+trefferlisteMitDetails-> LoeschenPopup;
+
+edge [ label="Suchen" ];
+
+start -> trefferlisteOhneDetails;
+trefferlisteMitDetails -> trefferlisteOhneDetails;
+trefferlisteOhneDetails -> trefferlisteOhneDetails;
+
+edge [ label="Element in Trefferliste selektiert" ];
+
+trefferlisteOhneDetails -> trefferlisteMitDetails;
+
+edge [ label="Element in Trefferliste deselektiert" ];
+ 
+trefferlisteMitDetails -> trefferlisteOhneDetails;
+
+edge [label = "nein"];
+LoeschenPopup -> trefferlisteMitDetails;
+AenderungenSpeichernPopup -> trefferlisteMitDetails;
+AenderungenSpeichernPopup -> trefferlisteOhneDetails;
+
+edge [label = "ja"];
+ValidierungsfehlerPopup -> trefferlisteMitDetails;
+LoeschenPopup -> trefferlisteOhneDetails;
+edge [label = "bestätigen, Inhalt inkorrekt"];
+AenderungenSpeichernPopup -> ValidierungsfehlerPopup;
+edge [label = "bestätigen, Inhalt korrekt"];
+AenderungenSpeichernPopup -> trefferlisteMitDetails;
+
+
+
+
+ 
+}
